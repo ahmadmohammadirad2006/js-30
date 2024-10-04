@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS + CSS Clock</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+    <style>
+      html {
+        background: #018ded url(https://unsplash.it/1500/1000?image=881&blur=5);
+        background-size: cover;
+        font-family: "helvetica neue";
+        text-align: center;
+        font-size: 10px;
+      }
+
+      body {
+        margin: 0;
+        font-size: 2rem;
+        display: flex;
+        flex: 1;
+        min-height: 100vh;
+        align-items: center;
+      }
+
+      .clock {
+        width: 30rem;
+        height: 30rem;
+        border: 20px solid white;
+        border-radius: 50%;
+        margin: 50px auto;
+        padding: 2rem;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
+          inset 0 0 10px black, 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hand {
+        width: 4px;
+        background: black;
+        position: absolute;
+        left: 50%;
+        transform-origin: bottom;
+      }
+
+      .hour-hand {
+        height: 30%;
+        top: 20%;
+        z-index: 10;
+      }
+
+      .min-hand {
+        height: 40%;
+        top: 10%;
+        z-index: 8;
+      }
+
+      .second-hand {
+        background-color: red;
+        height: 50%;
+        z-index: 6;
+        transform: rotate(364deg);
+        transition: .1s;
+        transition-timing-function: cubic-bezier(0.25, 2.99, 0.58, 1);
+      }
+    </style>
+
+    <script>
+      const hourHandEl = document.querySelector(".hour-hand");
+      const minHandEl = document.querySelector(".min-hand");
+      const secondHandEl = document.querySelector(".second-hand");
+
+      
+      const updateClock = function () {
+        const now = new Date();
+
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const second = now.getSeconds();
+        
+        if(second === 0) {
+          secondHandEl.style.transition = "none"
+        } else {
+          secondHandEl.style.transition = ".1s"
+        }
+
+        hourHandEl.style.transform = `rotate(${hour * 30}deg)`;
+        minHandEl.style.transform = `rotate(${min * 6}deg)`;
+        secondHandEl.style.transform = `rotate(${second * 6}deg)`;
+      };
+      updateClock();
+      setInterval(updateClock, 1000);
+    </script>
+  </body>
+</html>
